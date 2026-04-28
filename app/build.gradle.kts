@@ -4,6 +4,26 @@ plugins {
 
 val hasGoogleServicesJson = file("google-services.json").exists()
 
+// Load .env file for Hugging Face token
+fun loadEnvFile(): Map<String, String> {
+    val envMap = mutableMapOf<String, String>()
+    val envFile = file("../.env")
+    if (envFile.exists()) {
+        envFile.readLines().forEach { line ->
+            if (line.isNotEmpty() && !line.startsWith("#")) {
+                val parts = line.split("=", limit = 2)
+                if (parts.size == 2) {
+                    envMap[parts[0].trim()] = parts[1].trim()
+                }
+            }
+        }
+    }
+    return envMap
+}
+
+val env = loadEnvFile()
+val huggingFaceToken = env["HUGGING_FACE_TOKEN"] ?: "PLACEHOLDER_TOKEN"
+
 android {
     namespace = "com.example.smartscan"
     compileSdk = 36
@@ -18,6 +38,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("boolean", "FIREBASE_CONFIGURED", hasGoogleServicesJson.toString())
+        buildConfigField("String", "HUGGING_FACE_TOKEN", "\"$huggingFaceToken\"")
     }
 
     buildTypes {
@@ -43,7 +64,6 @@ dependencies {
     // Firebase BoM and libraries from catalog
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore)
 
     implementation(libs.appcompat)
     implementation(libs.material)
