@@ -1,9 +1,7 @@
-Name: [Your Full Name]
-Email: [your.email@example.com]
 Application Name: SmartScan Notes
 
 Brief Description:
-SmartScan Notes is an Android app (Java) that scans document text using Google ML Kit OCR,
+SmartScan Notes is an Android app that scans document text using Google ML Kit OCR,
 summarizes it using an AI API via Retrofit, extracts simple keywords, and saves notes in SQLite.
 The app includes Firebase email/password authentication, note search, and detail view.
 
@@ -17,5 +15,5 @@ Main Screens:
 Setup Notes:
 - Add your Firebase project and google-services.json in app/
 - Enable Email/Password in Firebase Authentication
-- Optional: add HUGGING_FACE_TOKEN in gradle.properties for live API summarization
+- add HUGGING_FACE_TOKEN 
 
